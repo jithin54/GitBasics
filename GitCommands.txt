@@ -1,0 +1,201 @@
+Configuring in git
+--------------------
+++ user name and email
+
+configuration can be done at 3 level
+
+System : All users
+Global : All repositories of current user
+Local  : Current repository
+
+git config --[level] user.name "user name"
+git config --[level] user.email useremail
+
+ex: git config --global user.name "John Smith"
+
+++ default editor 
+
+//set an IDE for editing
+git config --global core.editor "code --wait"  //code for vs code, wait flag for terminal to wait until vs code is closed
+
+//(or) edit directly from text file
+git config --global -e
+
+++ handling end of line (CR and LF) windows/mac
+git config --global core.autocrlf true/input //true for windows, input for mac/linux
+
+
+Getting help
+--------------
+++ full help
+git [command] --help
+
+++ breif help
+git [command] -h
+
+
+
+Creating git repository
+------------------
+++ initialize empty directory
+
+mkdir Moon
+cd Moon
+git init
+
+//use ls -a (a for all) not ls alone, if you want to see all folders
+ls -a
+
+//delete .git folder
+rm -rf .git 
+
+
+Git Workflow
+==================
+
+Project Directories -->> Staging area/Index -->> Git Repository
+
+
+
+Staging file
+----------------
+
+//changes in tracked and untracked files
+git status
+
+//staging
+git add file.txt file1.txt
+
+git add *.txt
+
+git add . (entire directory changes)
+
+Committing
+-------------
+++ simple commit description
+git commit -m "short description" 
+
+++ more details
+git commit
+-> This opens description fields in a default editor
+first line in editor : write your short description
+second line : keep it blank
+third line : write detailed description
+
+++committing in one step directly, without explicit staging (no staging for review)
+git commit -a -m "comment" (or use -am together)
+
+Removing a file
+---------------
+//conventional way, stage the deleted file before committing
+rm file1.txt
+git add file1.txt
+git commit -a
+
+//(or)git way , no staging required here
+git rm file1.txt file2.txt *.jpg
+git commit -a
+
+ 
+Removing and Moving
+-----------------
+//conventional way, 2 stage
+mv file.txt main.py
+git add file.txt main.py
+git status //you will see file.txt is renamed to main.py
+
+//(or)git way, single step
+git mv file.txt main.py
+
+Ignoring file
+----------------
+ //list all files/directories in .gitignore and commit
+.gitignore works only with files/directories which previously not committed (un tracked files)
+
+google for more
+
+Short status
+------------------
+git status // too much details
+
+git staus -s //short and simple , A for added and M for modified
+
+Review during staging
+-----------------------
+git diff --staged // it calls the default git utility
+
+git diff // diff between working directory and unstaged area
+
+++ configuring VS code for default diff tool
+git config --global diff.tool vscode
+git config --global diff.tool.vscode.cmd "code --wait --diff $GLOBAL $REMOTE"
+
+//or edit it
+git config --gloabal -e //configure it here
+
+//and use difftool exactly same as diff
+git difftool --staged
+git difftool
+
+Viewing history
+-----------------------
+//history of all commit
+git log
+
+HEAD->master : read HEAD pointing to master
+press SPACE: next page
+press Q: quit
+
+//short log
+git log --oneline
+
+//reverse
+git log --oneline --reverse
+
+Viewing Commit
+-----------------
+git show hashid
+//or
+git show HEAD~n
+//these shows always the difference
+
+++ all the files in a commit
+git ls-tree HEAD~n
+
+git show hashID
+
+git show OBJECTS 
+//OBJECTS can be 1) commits 2)blobs(files) 3)tree(directory) 4)Tags
+
+Unstaging
+------------------
+
+local changes/workig dir-> staging area -> repo
+
+//restore, in the past it was reset
+git restore --staged file.txt file.py *.py .(all)
+
+//most important: git restore restore to next enviornment
+ex: for staged file, next enviorment is last committed files
+
+Discard local changes
+--------------------------
+git restore file.py *.py .
+
+//remove untracked files
+git clean -f<force> -d<whole dir>
+
+Restoring a file to an older file
+------------------------------------
+
+git rm file.py (remove and stage)
+git commit -m ""
+
+//we have 2 options 1) undo, reverse last commit
+//2) restore to previous commit
+
+git restore --source=HEAD~1 file.py
+
+
+
+
