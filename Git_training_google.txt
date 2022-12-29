@@ -1,1 +1,21 @@
+What is ditributed versioning system?
 
+In a centralized vesrioning system, we check out only files we need. We might not have all the files from the server
+
+In a distributed versioning system, we have all the files in the server locally. after checkout you dont need connection 
+to serve to modify the files. Git stores all the history and it is easy to connect it back to server again
+
+Origin of Git
+- invented for vesrion control for linux kernal development in 2005
+
+Git hub
+- a popular git hosting server
+
+How to create a repository (or database for files)
+1. git init
+2. git clone
+
+.git folder contains all the history of the database (most of them are human readable)
+
+files and folders next to .git are called working tree
+if no files or folders, then its called bare repository- used in servers
