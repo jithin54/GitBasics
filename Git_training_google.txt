@@ -19,3 +19,150 @@ How to create a repository (or database for files)
 
 files and folders next to .git are called working tree
 if no files or folders, then its called bare repository- used in servers
+
+Checkout
+---------------
+In other Version Controls, checkout means get the file(s) from the server
+
+in Git, checkout means poupulate the working tree with a commit that you want to start working from
+
+Modifying 
+-------------
+git add <file>
+git rm (rarely used)
+
+git add will move the files to Staged (stage = Index)
+
+to unstage 
+git reset HEAD <file>
+
+git commit will create a commit object with all staged files
+
+3 states
+----------------
+1. HEAD (commit that was checkout out)
+2. Index (staged modification)
+3. working tree (unstaged modifications)
+
+git diff
+------------------
+git diff show all the modifications
+
+git diff : difference between index(stage) and working tree
+git diff --staged :difference between HEAD and index
+git diff HEAD : difference between HEAD and working tree
+
+Commit
+-------------
+snapshot of the state of entire repository
+
+git stores the date differentially
+it only stores the delta between each commit
+
+X: Every commit knows what it s parent
+
+Commit object
+-------------------
+ID : every commit will have a global unique id (hash id) or SHA1
+parent ID : its parent id
+tree : we dont care about tree
+author: Person who created a patch
+committer: Person who committed
+commit msg:
+etc...
+
+details of an individual commit
+git log : displays the commit hash (SHA1)
+git show <SHA1> : shows the changes in the commit wrt its parent
+
+X: we only need first 6 or 7 letters of the hash code to reference it
+
+Once committed, its immutable (commit can be changed, but its no longer original commit, hash changes). 
+basically if we change the already created commit, we basically destroy and create a new commit
+
+Commit message
+----------------
+first line is always the subject (less than 70 spaces)
+
+write anything, any number of paragraph
+
+Ticket, Issue, Story details
+
+Commit History
+----------------
+git log
+git log --oneline
+git log --graph
+gitk (shows a graph in gits default repository browser)
+
+Branch
+------------------
+A branch is just a pointer to a particular commit (also history behind that commit)
+ - All commits that are reachable from a branch following the parent pointers from the branch history
+ 
+ commit to which the branch point is also called branch tip
+ 
+ branch example : master
+ fullname : refs/heads/master
+ 
+ if you add a new commit in the master branch, master pointer automatically move to lastest commit
+ 
+create a branch
+1. git branch <name>
+2. git checkout -b <name> 
+
+show all branch
+1. git branch
+2. git branch -a
+
+X: there is nothing special about master branch
+
+X: origin/master is a remote tracking branch
+
+delete
+git branch -D <name> - deletes the pointer
+
+change branch (bascically set commit from where you want to start working)
+git checkout <branch>
+
+HEAD pointer
+---------------
+its a special pointer pointing to current branch
+everytime we switch brnaches HEAD will poin to new branch pointer
+
+Checkout with changes in working tree
+--------------------------------------
+1. Checkout new branch and working files are moved to new branch without conflicts
+2. git stash
+git checkout <newbranch>
+git stash pop
+- resolve conflicts
+git stash drop
+
+stash is like a stack, first in last out
+
+Amend Commit
+-------------
+git commit --amend 
+
+Bascially git creates a new sibling commit and allow you to change, but actual commit (objects) will be dropped
+
+Actual commit object will be lost (non reachable), but can be referenced. Soon (2 weeks later) git garbage collector will delete this commit completely
+
+X: git commit --amend is really usefull when we use Gerrit workflow
+If git workflow is used, amending a commit is not really recommended
+
+Resetting branches
+-------------------
+By default git HEAD will point to branch pointer (tip)
+
+Using git reset, we can move the HEAD to any other commit (need not be lated commited)
+
+git reset c2
+both HEAD and branch? will point to c2
+
+now if we checkout c5, only HEAD will point to c5 and master will be still c3.
+
+X: New commit will be added to HEAD always (No real use case for this)
+
+
