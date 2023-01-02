@@ -159,10 +159,48 @@ By default git HEAD will point to branch pointer (tip)
 Using git reset, we can move the HEAD to any other commit (need not be lated commited)
 
 git reset c2
-both HEAD and branch? will point to c2
+both HEAD and Branch will point to c2
 
 now if we checkout c5, only HEAD will point to c5 and master will be still c3.
-
 X: New commit will be added to HEAD always (No real use case for this)
 
 
+X: Resetting branches using git reset can be usefull if you want to ignore commits before pushing
+
+3 kinds of reset
+--soft , --mixed and --hard
+
+difference is as follows
+--soft : reset branch, but reset for index and working tree
+--mixed : reset branch and index, but not working tree
+--hard: reset everything
+
+X: better to use hard reset always, so that you can start fresh
+
+Another way of reset command
+git reset HEAD~n 
+
+
+X: git squash and git split: no one uses these days
+
+Tags
+------------------
+Baselining the history with human readable name
+Similar to branch, its a commit pointer.
+But the difference is that branch pointers are designed to move, but Tag pointers are fixed to particaular commit
+It can not be moved
+Tags are immutable, but it can be deleted and recreated
+X: But NEVER DO THAT
+
+actually there are 3 kinds of tags
+1. lightweighted tags: its a simple immutable commit pointer (explained above)
+git tag <tagname>
+2. annotated tags: full git object with commit message
+git tag -a <tagname>
+3.signed tags: tag with signature
+git tag -s <tagname>
+
+list tags
+git tag
+
+X: Mostly we use lightweighted tags
